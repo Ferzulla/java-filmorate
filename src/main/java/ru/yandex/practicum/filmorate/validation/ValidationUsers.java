@@ -47,7 +47,7 @@ public class ValidationUsers {
 
     public void validationUserId(User user, Map<Integer, User> users) {
         if (!users.containsKey(user.getId())) {
-            throw new ValidationException("Пользователь с Id - " + user.getId() + " - не найден в базе");
+            throw new ValidationException(String.format("Пользователь с Id - %s - не найден в базе", user.getId()));
         }
     }
 }

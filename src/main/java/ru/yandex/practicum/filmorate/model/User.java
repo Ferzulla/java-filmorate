@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
@@ -8,16 +9,17 @@ import java.time.LocalDate;
 
 @Data
 @NoArgsConstructor
+@FieldDefaults(level=AccessLevel.PRIVATE)   //делает все поля приватными
 public class User {
 
-    private int id ;
+     int id ;
     @NonNull
-    private String email;
+     String email;
     @NonNull
-    private String login;
-    private String name;
+     String login;
+     String name;
     @NonNull
-    private LocalDate birthday;
+     LocalDate birthday;
 
     public User(@NonNull String email, @NonNull String login, String name, @NonNull LocalDate birthday) {
         this.email = email;
