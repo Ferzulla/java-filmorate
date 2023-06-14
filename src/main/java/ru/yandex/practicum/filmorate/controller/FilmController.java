@@ -24,7 +24,7 @@ public class FilmController  {
 
     @GetMapping("/films")
     public List<Film> getFilms() {
-        log.info("Receiving a request");
+        log.info("Получение запроса");
         return filmService.getFilms();
     }
 
@@ -39,7 +39,7 @@ public class FilmController  {
     @PostMapping("/films")
     public Film postFilm(@RequestBody Film film) {
         validationFilm.validation(film);
-        log.info("Film making" + film);
+        log.info("Создание фильма" + film);
         return filmService.postFilm(film);
     }
 
@@ -66,7 +66,6 @@ public class FilmController  {
     public List<Film> getListBestMovies(
             @RequestParam(required = false) Integer count) {
         return filmService.getListBestMovies(count);
-
     }
 
 

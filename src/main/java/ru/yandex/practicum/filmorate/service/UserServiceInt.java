@@ -3,12 +3,8 @@ package ru.yandex.practicum.filmorate.service;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.InMemoryUserStorage;
-import ru.yandex.practicum.filmorate.storage.UserStorage;
-
-import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -39,7 +35,7 @@ public class UserServiceInt implements UserService {
 
     @Override
     public void addFriends(int userId, int friendId) {
-        log.info("Добавляем в список друзей userId - " + userId + "друга с ID " + friendId);
+        log.info(String.format("Добавляем в список друзей userId = %s, друга с ID = %s", userId,friendId));
         User user = inMemoryUserStorage.users.get(userId);
         User friendsUser = inMemoryUserStorage.users.get(friendId);
         user.addListFriend(friendId);
@@ -50,7 +46,7 @@ public class UserServiceInt implements UserService {
 
     @Override
     public void deleteFriends(int userId, int friendId) {
-       log.info("Удаляем из списка друзей userId - " + userId + "друга с ID " + friendId);
+        log.info(String.format("Удаляем из списка друзей userId = %s, друга с ID = %s", userId,friendId));
         User user = inMemoryUserStorage.users.get(userId);
         User friendsUser = inMemoryUserStorage.users.get(friendId);
         user.deleteFriends(friendId);
@@ -61,7 +57,7 @@ public class UserServiceInt implements UserService {
 
     @Override
     public List<User> getUserFriend(int userId) {
-        log.info("Получаем список друзей userId - " + userId);
+        log.info(String.format("Получаем список друзей userId = %s", userId));
         User user = inMemoryUserStorage.users.get(userId);
         List<User> friend = new ArrayList<>();
         for (Integer id : user.getListFriends()) {

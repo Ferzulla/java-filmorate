@@ -12,7 +12,7 @@ public class ValidationFilm {
 
     public void validation (Film film) {
         if (film.getName() == null || film.getName().isBlank() || film.getName().length() == 0) {
-            throw new ValidationException("Имя пользователя не может быть пустым");
+            throw new ValidationException(String.format("Имя пользователя не может быть пустым name = ", film.getName()));
         }
 
         if (film.getDescription().length() > 200) {
@@ -25,20 +25,20 @@ public class ValidationFilm {
         }
 
         if (film.getDuration() <= 0 ) {
-            throw new ValidationException("Продолжительность фильма не может быть " +
-                    "отрицательным или нулевым значением.");
+            throw new ValidationException(String.format("Продолжительность фильма не может быть " +
+                    "отрицательным или нулевым значением. Duration = %s", film.getDuration()));
         }
     }
 
     public void validationIdFilm(int id) {
         if (id < 1) {
-            throw new NullPointerException("Идентификатор не может быть отрицательным");
+            throw new NullPointerException(String.format("Идентификатор не может быть отрицательным. Id = %s", id));
         }
     }
 
     public void searchValidation(Film film) {
         if (film == null) {
-            throw new NullPointerException("Объект не найден по указанному идентификатору");
+            throw new NullPointerException(String.format("Объект не найден по указанному Id = %s", film.getId()));
         }
     }
 }

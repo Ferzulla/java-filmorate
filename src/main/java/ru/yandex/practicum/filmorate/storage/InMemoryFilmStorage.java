@@ -3,9 +3,7 @@ package ru.yandex.practicum.filmorate.storage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
-import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
-import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.validation.ValidationFilm;
 
 import java.util.ArrayList;
@@ -23,7 +21,7 @@ public class InMemoryFilmStorage implements FilmStorage {
 
     @Override
     public List<Film> getFilms() {
-        log.info("Получение фильма");
+        log.info("Получение списка фильмов");
         List<Film> list = new ArrayList<>(films.values());
         return list;
     }
@@ -34,7 +32,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         film.setId(generatedId);
         films.put(generatedId, film);
         generatedId++;
-        log.info("Запрос на добавление фильма" + film);
+        log.info(String.format("Запрос на добавление фильма с Id = %s", film.getId()));
         return film;
     }
 
@@ -45,7 +43,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         if (films.containsKey(film.getId())) {
             films.put(film.getId(), film);
         } else {
-            throw new NullPointerException("Id не найдено");
+            throw new NullPointerException(String.format("Id = %s не найдено", film.getId()));
         }
         return film;
     }
@@ -54,18 +52,5 @@ public class InMemoryFilmStorage implements FilmStorage {
     public Map<Integer, Film> getFilmsMap() {
         return films;
     }
-
-
-   /* public List<Film> getAllFilm(Integer id) {
-     //   log.info("Запрос на получение списка фильмов");
-        if (id == null) {
-            return new ArrayList<>(films.values());
-        }
-       List<Film> filmId = new ArrayList<>();
-        filmId.add(films.get(id));
-        return filmId;
-    }
-
-    */
 
 }

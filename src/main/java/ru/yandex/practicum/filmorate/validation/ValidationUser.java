@@ -27,11 +27,11 @@ public class ValidationUser {
             }
         }
         if (!validMail | user.getEmail().length() == 0) {
-            throw new ValidationException("Mail entered incorrectly");
+            throw new ValidationException("Неправильно введенная почта");
         } else if (validLogin) {
-            throw new ValidationException("Login entered incorrectly");
+            throw new ValidationException("Неправильно введен логин");
         } else if (user.getLogin().length() == 0) {
-            throw new ValidationException("Login cannot be empty");
+            throw new ValidationException("Логин не может быть пустым");
         }
         if (user.getName() == null) {
             user.setName(user.getLogin());
@@ -41,27 +41,27 @@ public class ValidationUser {
         LocalDate localDateNow = LocalDate.now();
 
         if (localDateNow.isBefore(user.getBirthday())) {
-            throw new ValidationException("Date of birth cannot be greater than the current date");
+            throw new ValidationException("Дата рождения не может быть больше текущей даты");
         }
     }
 
     public void validationAddFriend(int id, int idFriend) {
         if (id == idFriend) {
-            throw new ValidationException("Unable to add or remove myself from friends list");
+            throw new ValidationException("Не удается добавить или удалить себя из списка друзей");
         } else if (id < 1 || idFriend  < 1) {
-            throw new NullPointerException("ID cannot be negative");
+            throw new NullPointerException("Идентификатор " + id + " не может быть отрицательным");
         }
     }
 
     public void searchValidation(User user) {
         if (user == null) {
-            throw new NullPointerException("Object not found by specified id");
+            throw new NullPointerException("Объект не найден");
         }
     }
 
     public void checkId(int id) {
         if (id < 1) {
-            throw new NullPointerException("ID cannot be negative");
+            throw new NullPointerException("Идентификатор" + id + " не может быть отрицательным");
         }
     }
 }
