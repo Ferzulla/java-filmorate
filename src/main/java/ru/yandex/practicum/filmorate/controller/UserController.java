@@ -1,56 +1,88 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import jdk.jfr.Registered;
-import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
-import ru.yandex.practicum.filmorate.validation.ValidationUsers;
+import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.validation.ValidationUser;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Data
 @Slf4j
-@Registered
-@RequestMapping("/users")
 @RestController
+@AllArgsConstructor
 public class UserController {
-    private  final Map<Integer, User> users = new HashMap<> ();
-    private  int generatedId = 1;
+    private final  UserService userService ;
+    private ValidationUser validationUser;
 
-    ValidationUsers validationUsers = new ValidationUsers();
-    @PostMapping
-    public User postUser (@RequestBody User user) {
-        log.info("Запрос на добавление пользователя");
-        validationUsers.validationUser(user);
-        user.setId(generatedId);
-        users.put(generatedId, user);
-        generatedId++;
-        return user;
+    @GetMapping("/users")
+    public List<User> getUsers() {
+        return userService.getUsers();
+    }
+    @GetMapping("/users/{id}")
+    public User getUser(@PathVariable int id) {
+        validationUser.searchValidation(userService.getUser(id));
+        return userService.getUser(id);
+    }
+    @PostMapping("/users")
+    public User postUser(@RequestBody User user) {
+        validationUser.validation(user);
+        validationUser.searchValidation(user);
+        return userService.postUser(user);
     }
 
-    @PutMapping
-    public User putUser (@RequestBody User user) {
-        log.info("Запрос на ,обновление данных пользователя");
-        validationUsers.validationUser(user);
-        validationUsers.validationUserId(user, users);
-        int id = user.getId();
-        if (user.getId() != 0 && (users.containsKey(user.getId()))) {
-            users.put(id, user);
-
-        }
-        return user;
+    @PutMapping("/users")
+    public User putUser(@RequestBody User user) {
+        validationUser.validation(user);
+        validationUser.searchValidation(user);
+        return userService.putUser(user);
     }
 
-    @GetMapping
-    public List<User> getAllUsers() {
-        log.info("Запрос на получение списка пользователей");
-        return new ArrayList<>(users.values());
+    @PutMapping ("/users/{id}/friends/{friendId}")
+    public void addFriend(@PathVariable int id, @PathVariable int friendId) {
+        validationUser.validationAddFriend(id, friendId);
+        userService.addFriends(id,friendId);
     }
+
+    @DeleteMapping("/users/{id}/friends/{friendId}")
+    public void deleteFriend(@PathVariable int id, @PathVariable int friendId) {
+        validationUser.validationAddFriend(id, friendId);
+        userService.deleteFriends(id, friendId);
+    }
+
+    @GetMapping("/users/{id}/friends")
+    public List<User> getUserFriend(@PathVariable int id) {
+        validationUser.checkId(id);
+        return userService.getUserFriend(id);
+    }
+
+    @GetMapping("/users/{id}/friends/common/{otherId}")
+    public List<User> getUserFriend(@PathVariable int id, @PathVariable int otherId) {
+        validationUser.validationAddFriend(id, otherId);
+        return userService.getListMutualFriend(id, otherId);
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Map<String, String> errorValidation(final ValidationException e) {
+        return Map.of("Ошибка" , e.getMessage());
+    }
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Map<String, String> noRequiredObject(final NullPointerException e) {
+        return Map.of("Ошибка" , e.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String, String> internalServerError(final IndexOutOfBoundsException e) {
+        return Map.of("Ошибка" , "внутренняя ошибка сервера");
+    }
+
+
 
 }

@@ -1,15 +1,16 @@
 package ru.yandex.practicum.filmorate.validation;
 
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
 import java.util.Map;
-
+@Component
 public class ValidationFilm {
 
-    public void validationFilm (Film film) {
+    public void validation (Film film) {
         if (film.getName() == null || film.getName().isBlank() || film.getName().length() == 0) {
             throw new ValidationException("Имя пользователя не может быть пустым");
         }
@@ -29,9 +30,15 @@ public class ValidationFilm {
         }
     }
 
-    public void validationFilmId(Film film, Map<Integer, Film> films) {
-        if (!films.containsKey(film.getId())) {
-            throw new ValidationException("Фильм с Id - " + film.getId() + " - не найден в базе");
+    public void validationIdFilm(int id) {
+        if (id < 1) {
+            throw new NullPointerException("Идентификатор не может быть отрицательным");
+        }
+    }
+
+    public void searchValidation(Film film) {
+        if (film == null) {
+            throw new NullPointerException("Объект не найден по указанному идентификатору");
         }
     }
 }

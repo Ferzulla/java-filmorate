@@ -1,15 +1,15 @@
 package ru.yandex.practicum.filmorate.validation;
 
+import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
-import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
-import java.util.Map;
 
-public class ValidationUsers {
+@Component
+public class ValidationUser {
 
-    public void validationUser (User user) throws ValidationException {
+    public void validation (User user) throws ValidationException {
         char[] mail = user.getEmail().toCharArray();
         char[] login = user.getLogin().toCharArray();
         boolean validMail = false;
@@ -45,9 +45,23 @@ public class ValidationUsers {
         }
     }
 
-    public void validationUserId(User user, Map<Integer, User> users) {
-        if (!users.containsKey(user.getId())) {
-            throw new ValidationException(String.format("Пользователь с Id - %s - не найден в базе", user.getId()));
+    public void validationAddFriend(int id, int idFriend) {
+        if (id == idFriend) {
+            throw new ValidationException("Unable to add or remove myself from friends list");
+        } else if (id < 1 || idFriend  < 1) {
+            throw new NullPointerException("ID cannot be negative");
+        }
+    }
+
+    public void searchValidation(User user) {
+        if (user == null) {
+            throw new NullPointerException("Object not found by specified id");
+        }
+    }
+
+    public void checkId(int id) {
+        if (id < 1) {
+            throw new NullPointerException("ID cannot be negative");
         }
     }
 }
