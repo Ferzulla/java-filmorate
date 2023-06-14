@@ -16,19 +16,21 @@ import java.util.Map;
 @RestController
 @AllArgsConstructor
 @Slf4j
+@RequestMapping("/films")
 public class FilmController  {
 
     private final ValidationFilm validationFilm = new ValidationFilm();
     private final FilmService filmService;
+   //tring partOfTheWay = "/films";
 
 
-    @GetMapping("/films")
+    @GetMapping
     public List<Film> getFilms() {
         log.info("Получение запроса");
         return filmService.getFilms();
     }
 
-    @GetMapping("/films/{id}")
+    @GetMapping("/{id}")
     @ResponseBody
     public Film getFilms(@PathVariable Integer id) {
         validationFilm.validationIdFilm(id);
@@ -36,32 +38,32 @@ public class FilmController  {
         return filmService.getFilm(id);
     }
 
-    @PostMapping("/films")
+    @PostMapping
     public Film postFilm(@RequestBody Film film) {
         validationFilm.validation(film);
         log.info("Создание фильма" + film);
         return filmService.postFilm(film);
     }
 
-    @PutMapping("/films")
+    @PutMapping
     public Film putFilm(@RequestBody Film film) {
         validationFilm.validation(film);
         return filmService.putFilm(film);
     }
 
-    @PutMapping("/films/{id}/like/{userId}")
+    @PutMapping("/{id}/like/{userId}")
     public void addLikeFilm(@PathVariable int id, @PathVariable int userId) {
         filmService.addLikeFilm(id, userId);
     }
 
-    @DeleteMapping("/films/{id}/like/{userId}")
+    @DeleteMapping("/{id}/like/{userId}")
     public void deleteLikeFilm(@PathVariable int id, @PathVariable int userId) {
         validationFilm.validationIdFilm(id);
         validationFilm.validationIdFilm(userId);
         filmService.deleteLikeFilm(id, userId);
     }
 
-    @GetMapping("/films/popular")
+    @GetMapping("/popular")
     @ResponseBody
     public List<Film> getListBestMovies(
             @RequestParam(required = false) Integer count) {

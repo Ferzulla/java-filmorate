@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.validation.ValidationFilm;
 
 
 import java.util.*;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class FilmServiceInt implements FilmService {
     private InMemoryFilmStorage filmStorage;
+    ValidationFilm validationFilm = new ValidationFilm();
 
     @Override
     public List<Film> getFilms() {
@@ -47,7 +49,7 @@ public class FilmServiceInt implements FilmService {
 
     @Override
     public Film getFilm(Integer id) {
-
+        validationFilm.searchValidation(filmStorage.films.get(id));
         return filmStorage.getFilmsMap().get(id);
     }
 
