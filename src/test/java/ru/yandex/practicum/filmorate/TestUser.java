@@ -1,8 +1,6 @@
 package ru.yandex.practicum.filmorate;
 
 import org.junit.jupiter.api.Test;
-import ru.yandex.practicum.filmorate.controller.FilmController;
-import ru.yandex.practicum.filmorate.controller.UserController;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -12,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class TestUser {
 
-    public UserController userController = new UserController();
+    public UserControllerOld userController = new UserControllerOld();
 
 
     @Test
