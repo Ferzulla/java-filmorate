@@ -4,7 +4,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 
@@ -21,33 +23,16 @@ public class User {
      LocalDate birthday;
     private Set<Integer> listFriends = new HashSet<>();
 
-    public User( String email, String login, String name, LocalDate birthday) {
-        this.email = email;
-        this.login = login;
-        this.name = name;
-        this.birthday = birthday;
-    }
-
-    public User(int id, String email, String login, String name,  LocalDate birthday) {
+    public User(int id, String email, String login, String name, LocalDate birthday, Set<Integer> listFriends) {
         this.id = id;
         this.email = email;
         this.login = login;
         this.name = name;
         this.birthday = birthday;
+        this.listFriends = listFriends;
     }
 
-    public User( String email, String name, LocalDate birthday) {
-        this.email = email;
-        this.name = name;
-        this.birthday = birthday;
-    }
 
-    public User(int id, String email, String name, LocalDate birthday) {
-        this.id = id;
-        this.email = email;
-        this.name = name;
-        this.birthday = birthday;
-    }
 
     public Set<Integer> getFriends() {
         return listFriends;
