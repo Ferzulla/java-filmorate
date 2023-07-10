@@ -1,23 +1,25 @@
 package ru.yandex.practicum.filmorate.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import ru.yandex.practicum.filmorate.model.User;
 
+import java.util.Collection;
 import java.util.List;
 
 public interface UserService {
-    List<User> getUsers();
+    User addUser(User user) throws JsonProcessingException;
 
-    User postUser(User user);
+    User updateUser(User user);
 
-    User putUser(User user);
+    Collection<User> usersList();
 
-    void addFriends(int userId, int friendId);
+    User getOneUser(long id);
 
-    void deleteFriends(int userId, int friendId);
+    Collection<User> getAllUserFriends(long id);
 
-    List<User>  getUserFriend(int userId);
+    List<User> listOfMutualFriends(long id, long friendId);
 
-    List<User>  getListMutualFriend(int userId, int otherId);
+    Collection<Long> addFriend(long userId, long friendId);
 
-    User getUser(int id);
+    void deleteFriend(long userId, long friendId);
 }
