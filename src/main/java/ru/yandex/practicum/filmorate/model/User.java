@@ -1,8 +1,10 @@
 package ru.yandex.practicum.filmorate.model;
 
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -17,19 +19,20 @@ import java.util.Set;
 @Builder
 @Data
 @AllArgsConstructor
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class User {
 
-    private long id;
+     long id;
     @NotBlank
     @Email
-    private String email;
-    @NotNull
+     String email;
+
     @NotBlank
-    private String login;
-    private String name;
+     String login;
+     String name;
     @Past
-    private LocalDate birthday;
-    private final Set<Long> friends = new HashSet<>();  //айди юзеров, подавших заявки в друзья
+     LocalDate birthday;
+     final Set<Long> friends = new HashSet<>();  //айди юзеров, подавших заявки в друзья
 
     public void addFriend(Long id) {
         friends.add(id);

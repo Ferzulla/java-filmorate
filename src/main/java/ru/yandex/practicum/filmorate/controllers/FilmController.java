@@ -35,31 +35,31 @@ public class FilmController {
 
     @PutMapping("/{id}/like/{userId}")
     public Collection<Long> addLike(@PathVariable("id") long filmId, @PathVariable long userId) {
-        log.info("Получен PUT {} запрос: /{id}/like/{userId} ", userId);
+        log.info("Получен PUT {} запрос: /films/{id}/like/{userId} ", userId);
         return filmService.addLike(filmId, userId);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
     public Collection<Long> removeLike(@PathVariable("id") long filmId, @PathVariable long userId) {
-        log.info("Получен DELETE {} запрос: /{id}/like/{userId} ", userId);
+        log.info("Получен DELETE {} запрос: /films/{id}/like/{userId} ", userId);
         return filmService.deleteLike(filmId, userId);
     }
 
     @GetMapping
     public Collection<Film> filmsList() {
-        log.info("Получен GET запрос /films ");
+        log.info("Получен GET запрос /films/films ");
         return filmService.filmList();
     }
 
     @GetMapping("/popular")
     public Collection<Film> listPopularFilms(@RequestParam(defaultValue = "10") int count) {
-        log.info("Получен GET {} запрос: /popular ", count);
+        log.info("Получен GET {} запрос: /films/popular ", count);
         return filmService.listPopularFilms(count);
     }
 
     @GetMapping("/{id}")
     public Film getOneFilm(@PathVariable long id) {
-        log.info("Получен GET {} запрос: /{id} ", id);
+        log.info("Получен GET {} запрос: /films/{id} ", id);
         return filmService.getOneFilm(id);
     }
 }

@@ -1,7 +1,9 @@
 package ru.yandex.practicum.filmorate.model;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -13,22 +15,23 @@ import java.util.stream.Collectors;
 
 @Data
 @Builder
+@FieldDefaults(level= AccessLevel.PRIVATE)
 public class Film {
 
-    private long id;
-    @NotNull
+     long id;
+
     @NotBlank
-    private String name;
+     String name;
     @Size(max = 200)
-    private String description;
+     String description;
     @NotNull
-    private LocalDate releaseDate;
+     LocalDate releaseDate;
     @Positive
-    private int duration;
+     int duration;
     @NotNull
-    private Mpa mpa;
-    private final Set<Genre> genres = new HashSet<>();//список жанров
-    private final Set<Long> likes = new HashSet<>(); //айди юзеров, поставивших лайк фильму
+     Mpa mpa;
+     final Set<Genre> genres = new HashSet<>();//список жанров
+     final Set<Long> likes = new HashSet<>(); //айди юзеров, поставивших лайк фильму
 
     public void addGenre(Genre genre) {
         genres.add(genre);

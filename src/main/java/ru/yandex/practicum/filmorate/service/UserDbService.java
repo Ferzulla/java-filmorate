@@ -93,7 +93,9 @@ public class UserDbService implements UserService {
         boolean isUserFriendTwo = friendshipStorage.allUsersFriends(friendId).contains(userId);
         if (!isUserFriendOne) {
             log.info("Пользовтель {} никогда не был другом пользователя {}. ", userId, friendId);
-            throw new UserNotFoundException("Пользователи никогда не были друзьями" + userId + "," + friendId);
+            throw new UserNotFoundException(String.format("Пользователи никогда не были друзьями userId = %s, " +
+                    "friendId = %s", userId, friendId));
+
         } else if (!isUserFriendTwo) {
             friendshipStorage.deleteFriend(userId, friendId);
         } else {

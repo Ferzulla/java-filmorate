@@ -47,31 +47,31 @@ public class UserController {
 
     @PutMapping("/{id}/friends/{friendId}") //добавление в друзья
     public Collection<Long> addFriend(@PathVariable("id") long userId, @PathVariable long friendId) {
-        log.info("Получен PUT запрос {} : /{id}/friends/{friendId}. ", friendId);
+        log.info("Получен PUT запрос {} : /users/{id}/friends/{friendId}. ", friendId);
         return userService.addFriend(userId, friendId);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}") //удаление из друзей
     public void deleteFriend(@PathVariable("id") long userId, @PathVariable long friendId) {
-        log.info("Получен DELETE запрос {}: /{id}/friends/{friendId}. ", friendId);
+        log.info("Получен DELETE запрос {}: /users/{id}/friends/{friendId}. ", friendId);
         userService.deleteFriend(userId, friendId);
     }
 
     @GetMapping("/{id}")  //получение пользователя по идентификатору
     public User getOneUser(@PathVariable long id) {
-        log.info("Получен GET запрос {} : /{id}. ", id);
+        log.info("Получен GET запрос {} : /users/{id}. ", id);
         return userService.getOneUser(id);
     }
 
     @GetMapping("/{id}/friends") //вывести список всех друзей одного пользователя
     public Collection<User> getAllUserFriends(@PathVariable long id) {
-        log.info("Получен GET запрос {} : /{id}/friends. ", id);
+        log.info("Получен GET запрос {} : /users/{id}/friends. ", id);
         return userService.getAllUserFriends(id);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
     public List<User> listOfMutualFriends(@PathVariable long id, @PathVariable long otherId) {
-        log.info("Получен GET запрос {} : /{id}/friends/common/{otherId}. ", otherId);
+        log.info("Получен GET запрос {} : /users/{id}/friends/common/{otherId}. ", otherId);
         return userService.listOfMutualFriends(id, otherId);
 
     }
