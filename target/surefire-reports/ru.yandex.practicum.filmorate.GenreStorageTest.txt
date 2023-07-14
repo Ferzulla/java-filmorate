@@ -1,0 +1,17 @@
+-------------------------------------------------------------------------------
+Test set: ru.yandex.practicum.filmorate.GenreStorageTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.039 s <<< FAILURE! - in ru.yandex.practicum.filmorate.GenreStorageTest
+shouldGetGenreById  Time elapsed: 0.533 s  <<< FAILURE!
+java.lang.AssertionError: 
+
+Expecting
+  Genre(id=1, name=РљРѕРјРµРґРёСЏ)
+to have a property or a field named "name" with value
+  "Комедия"
+but value was:
+  "РљРѕРјРµРґРёСЏ"
+(static and synthetic fields are ignored)
+	at ru.yandex.practicum.filmorate.GenreStorageTest.lambda$shouldGetGenreById$1(GenreStorageTest.java:45)
+	at ru.yandex.practicum.filmorate.GenreStorageTest.shouldGetGenreById(GenreStorageTest.java:44)
+

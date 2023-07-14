@@ -1,0 +1,8 @@
+-------------------------------------------------------------------------------
+Test set: ru.yandex.practicum.filmorate.TestUser
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0 s <<< FAILURE! - in ru.yandex.practicum.filmorate.TestUser
+ru.yandex.practicum.filmorate.TestUser  Time elapsed: 0 s  <<< ERROR!
+java.lang.NoClassDefFoundError: ru/yandex/practicum/filmorate/controller/UserController
+Caused by: java.lang.ClassNotFoundException: ru.yandex.practicum.filmorate.controller.UserController
+

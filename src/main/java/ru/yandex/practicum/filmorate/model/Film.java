@@ -1,54 +1,60 @@
 package ru.yandex.practicum.filmorate.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
-
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@FieldDefaults(level=AccessLevel.PRIVATE)   //делает все поля приватными
-public class Film implements Comparable<Film> {
-    int id;
-    String name;
-    String description;
-    LocalDate releaseDate;
-    int duration;
-    private Set<Integer> usersLikeMovie = new HashSet<>();
-    private int likes = 0;
+@Builder
+@FieldDefaults(level= AccessLevel.PRIVATE)
+public class Film {
 
-    public int getLikes() {
-        return likes;
+     long id;
+
+    @NotBlank
+     String name;
+    @Size(max = 200)
+     String description;
+    @NotNull
+     LocalDate releaseDate;
+    @Positive
+     int duration;
+    @NotNull
+     Mpa mpa;
+     final Set<Genre> genres = new HashSet<>();//список жанров
+     final Set<Long> likes = new HashSet<>(); //айди юзеров, поставивших лайк фильму
+
+    public void addGenre(Genre genre) {
+        genres.add(genre);
     }
 
-    public Film( String name,  String description,
-                 LocalDate releaseDate, int duration) {
-      this.name = name;
-      this.description = description;
-      this.releaseDate = releaseDate;
-      this.duration = duration;
-   }
-
-    public void setUsersLikeMovie(Set<Integer> usersLikeMovie) {
-        this.setLikes(usersLikeMovie.size());
-        this.usersLikeMovie = usersLikeMovie;
+    public void createGenre(Genre genre) {
+        genres.add(genre);
     }
 
-    public void addLike(int id) {
-        usersLikeMovie.add(id);
-        setLikes(getLikes() + 1);
-    }
-    public void deleteLike(int id) {
-        usersLikeMovie.remove(id);
-        setLikes(getLikes() - 1);
+    public List<Genre> getGenres() {
+        return genres.stream()
+                .sorted(Comparator.comparing(Genre::getId))
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public int compareTo(Film o) {
-        return Integer.compare(o.getLikes(), this.likes);
+    public Map<String, Object> filmValue() {
+        Map<String, Object> values = new HashMap<>();
+        values.put("film_name", name);
+        values.put("film_description", description);
+        values.put("release_date", releaseDate);
+        values.put("duration", duration);
+        values.put("mpa_id", mpa.getId());
+        return values;
     }
+
 }
